@@ -96,17 +96,38 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(p==null)throw new RuntimeErrorException(null, "Produit introuvable");
+		if(p==null)throw new RuntimeErrorException(null, "Produit "+ ref +" introuvable");
 		return p;
 	}
 	@Override
 	public void updateProduit(Produit p) {
-		
+		Connection conn=SingletonConnectionne.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("update PRODUITS set DESIGNATION=?, PRIX=?, QUANTITE=? where REF_PROD=?");
+			ps.setString(1, p.getDesignation());
+			ps.setDouble(2, p.getPrix());
+			ps.setInt(3, p.getQuantite());
+			ps.setString(4, p.getReference());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void deleteProduit(String ref) {
-		
+		Connection conn=SingletonConnectionne.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("delete PRODUITS where REF_PROD=?");
+			ps.setString(1, ref);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
