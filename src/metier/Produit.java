@@ -2,6 +2,7 @@ package metier;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Produit implements Serializable {
 	private String reference, designation;
 	private double prix;

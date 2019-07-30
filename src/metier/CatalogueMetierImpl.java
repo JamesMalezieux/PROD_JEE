@@ -15,7 +15,7 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 	public void addProduit(Produit p) {
 		Connection conn=SingletonConnectionne.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("insert into PRODUITS values (REF_PROD, DESIGNATION, PRIX, QUANTITE)");
+			PreparedStatement ps=conn.prepareStatement("insert into PRODUITS (REF_PROD, DESIGNATION, PRIX, QUANTITE) values (?,?,?,?)");
 			ps.setString(1, p.getReference());
 			ps.setString(2, p.getDesignation());
 			ps.setDouble(3, p.getPrix());
@@ -40,7 +40,7 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 				Produit p=new Produit();
 				p.setReference(rs.getString("REF_PROD"));
 				p.setDesignation(rs.getString("DESIGNATION"));
-				p.setPrix(rs.getDouble("REF_PROD"));
+				p.setPrix(rs.getDouble("PRIX"));
 				p.setQuantite(rs.getInt("QUANTITE"));
 				prods.add(p);
 			}
@@ -57,14 +57,14 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 		List<Produit> prods=new ArrayList<Produit>();/*instance de la liste de produit*/
 		Connection conn=SingletonConnectionne.getConnection(); /*conncetion*/
 		try {
-			PreparedStatement ps=conn.prepareStatement("select * from PRODUITS where DESIGNATION like ?");
+			PreparedStatement ps=conn.prepareStatement("SELECT * FROM PRODUITS where DESIGNATION like ?");
 			ps.setString(1, "%"+mc+"%");
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()) {
 				Produit p=new Produit();
 				p.setReference(rs.getString("REF_PROD"));
 				p.setDesignation(rs.getString("DESIGNATION"));
-				p.setPrix(rs.getDouble("REF_PROD"));
+				p.setPrix(rs.getDouble("PRIX"));
 				p.setQuantite(rs.getInt("QUANTITE"));
 				prods.add(p);
 			}
