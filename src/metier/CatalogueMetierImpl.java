@@ -15,7 +15,7 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 	public void addProduit(Produit p) {
 		Connection conn=SingletonConnectionne.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("insert into PRODUITS (REF_PROD, DESIGNATION, PRIX, QUANTITE) values (?,?,?,?)");
+			PreparedStatement ps=conn.prepareStatement("insert into PRODUITS (REF_PROD,DESIGNATION,PRIX,QUANTITE) values (?,?,?,?)");
 			ps.setString(1, p.getReference());
 			ps.setString(2, p.getDesignation());
 			ps.setDouble(3, p.getPrix());
@@ -23,7 +23,7 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -31,10 +31,10 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 
 	@Override
 	public List<Produit> listProduits() {
-		List<Produit> prods=new ArrayList<Produit>();/*instance de la liste de produit*/
-		Connection conn=SingletonConnectionne.getConnection(); /*conncetion*/
+		List<Produit> prods=new ArrayList<Produit>();
+		Connection conn=SingletonConnectionne.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("select * from PRODUITS");
+			PreparedStatement ps=conn.prepareStatement("select * from produits");
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()) {
 				Produit p=new Produit();
@@ -45,8 +45,7 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 				prods.add(p);
 			}
 			ps.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return prods;
@@ -54,10 +53,10 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 
 	@Override
 	public List<Produit> ProduitsParMC(String mc) {
-		List<Produit> prods=new ArrayList<Produit>();/*instance de la liste de produit*/
-		Connection conn=SingletonConnectionne.getConnection(); /*conncetion*/
+		List<Produit> prods=new ArrayList<Produit>();
+		Connection conn=SingletonConnectionne.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("SELECT * FROM PRODUITS where DESIGNATION like ?");
+			PreparedStatement ps=conn.prepareStatement("select * from produits where DESIGNATION like ?");
 			ps.setString(1, "%"+mc+"%");
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()) {
@@ -69,8 +68,7 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 				prods.add(p);
 			}
 			ps.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return prods;
@@ -78,29 +76,30 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 
 	@Override
 	public Produit getProduit(String ref) {
-		Produit p= null;
+		Produit p=null;
 		Connection conn=SingletonConnectionne.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("select * from PRODUITS where REF_PROD=?");
+			PreparedStatement ps=conn.prepareStatement
+					("select * from produits where REF_PROD=?");
 			ps.setString(1, ref);
 			ResultSet rs=ps.executeQuery();
-			if(rs.next()) {
-				p= new Produit();
+			while(rs.next()) {
+				p=new Produit();
 				p.setReference(rs.getString("REF_PROD"));
 				p.setDesignation(rs.getString("DESIGNATION"));
-				p.setPrix(rs.getDouble("REF_PROD"));
-				p.setQuantite(rs.getInt("QUANTITE"));	
+				p.setPrix(rs.getDouble("PRIX"));
+				p.setQuantite(rs.getInt("QUANTITE"));
 			}
 			ps.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(p==null)throw new RuntimeErrorException(null, "Produit "+ ref +" introuvable");
+		if(p==null) throw new RuntimeErrorException(null, "Produit " + ref + " introuvable.");
 		return p;
 	}
+
 	@Override
-	public void updateProduit(Produit p) {
+	public void updateProduit(Produit p) {	
 		Connection conn=SingletonConnectionne.getConnection();
 		try {
 			PreparedStatement ps=conn.prepareStatement("update PRODUITS set DESIGNATION=?, PRIX=?, QUANTITE=? where REF_PROD=?");
@@ -111,7 +110,7 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -120,14 +119,16 @@ public class CatalogueMetierImpl implements ICatalogueMetier{
 	public void deleteProduit(String ref) {
 		Connection conn=SingletonConnectionne.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("delete PRODUITS where REF_PROD=?");
+			PreparedStatement ps=conn.prepareStatement("DELETE FROM PRODUITS where REF_PROD=?");
 			ps.setString(1, ref);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
+		
 	}
 	
-}
+		
+}	

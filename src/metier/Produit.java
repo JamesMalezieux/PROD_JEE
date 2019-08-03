@@ -31,11 +31,9 @@ public class Produit implements Serializable {
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
-	
 	public Produit() {
 		super();
 	}
-	
 	public Produit(String reference, String designation, double prix, int quantite) {
 		super();
 		this.reference = reference;
@@ -43,4 +41,6 @@ public class Produit implements Serializable {
 		this.prix = prix;
 		this.quantite = quantite;
 	}
+	
+
 }
