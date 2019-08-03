@@ -6,14 +6,14 @@
   <thead>
     <tr>
       <th scope="col"><input type="text" name="motCle" placeholder="Tapez le mot clé içi"></th>
-      <th scope="col"><button type="submit" class="btn btn-outline-primary">Submit</button></th>
+      <th scope="col"><button type="submit" class="btn btn-outline-primary" value="chercher" name="action">Submit</button></th>
     </tr>
       	<tr>
-	      <th scope="row">#</th>
-	      <th scope="col">Ref</td>
-	      <th scope="col">Désignation</td>
-	      <th scope="col">Prix</td>
-	      <th scope="col">Quantité</td>
+	      <th scope="row" class="table1">#</th>
+	      <th scope="col" class="table1">Ref</td>
+	      <th scope="col" class="table1">Désignation</td>
+	      <th scope="col" class="table1">Prix</td>
+	      <th scope="col" class="table1">Quantité</td>
     </tr>
   </thead>
   <tbody>
@@ -24,9 +24,9 @@
 	<td>${p.designation}</td>
 	<td>${p.prix}</td>
 	<td>${p.quantite}</td>
+	<td><a href="controleur.php?action=delete&ref=${p.reference}">Delete</a></td>
   </tr>
   </c:forEach>
-
   </tbody>
 </table>
 </form>

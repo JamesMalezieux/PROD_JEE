@@ -39,7 +39,7 @@ public class ControleurServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("VueProduits.jsp").forward(request, response);
+		doPost(request, response);
 	}
 
 	/**
@@ -47,14 +47,21 @@ public class ControleurServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProduitModel model=new ProduitModel();
-		model.setMotCle(request.getParameter("motCle"));
-		List<Produit> produits=metier.ProduitsParMC(model.getMotCle());
-		model.setProduit(produits);
 		request.setAttribute("model", model);
-		request.getRequestDispatcher("VueProduits.jsp").forward(request, response);
-		
-		
-		
+		String action=request.getParameter("action");
+		if(action != null) {
+		if(action.equals("chercher")) {
+			model.setMotCle(request.getParameter("motCle"));
+			List<Produit> produits=metier.ProduitsParMC(model.getMotCle());
+			model.setProduit(produits);
+		}
+		else if(action.equals("delete")) {
+			String ref=request.getParameter("ref");
+			metier.deleteProduit(ref);
+			model.setProduit(metier.listProduits());
+		}
 	}
+		request.getRequestDispatcher("VueProduits.jsp").forward(request, response);
 
 }
+	}
