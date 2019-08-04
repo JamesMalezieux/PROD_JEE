@@ -8,7 +8,7 @@ public class ProduitModel {
 private String motCle;
 private Produit produit=new Produit();
 private String errors;
-private String mode="edit";       
+private String mode="ajout";       
 
 public String getMode() {
 	return mode;

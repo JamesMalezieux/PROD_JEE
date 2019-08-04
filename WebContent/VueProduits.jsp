@@ -2,19 +2,25 @@
 <%@ include file="header.jsp" %>
 <p>
 <form action="controleur.php" method="post" >
-<input type="hidden" value="${model.mode }">
+<input type="hidden" value="${model.mode }" name="mode">
   <table class="table">
-  <thead>
+    <thead>
     <tr>
       <th scope="col"><input type="text" name="motCle" placeholder="Tapez le mot clé içi"></th>
       <th scope="col"><button type="submit" class="btn btn-outline-primary" value="chercher" name="action">Submit</button></th>
       </tr>
       <tr>
+    <c:if test="${model.mode=='ajout'}">
       <th scope="col"><input type="text" name="reference" placeholder="Tapez la référence içi" value="${model.produit.reference }"></th>
+    </c:if>
+    <c:if test="${model.mode=='edit' }">
+      <th scope="col">${model.produit.reference }<input type="hidden" name="reference" placeholder="Tapez la référence içi" value="${model.produit.reference }"></th>
+	</c:if>
       <th scope="col"><input type="text" name="designation" placeholder="Tapez la désignation içi" value="${model.produit.designation }"></th>
       <th scope="col"><input type="text" name="prix" placeholder="Tapez le prix içi" value="${model.produit.prix }"></th>
       <th scope="col"><input type="text" name="quantite" placeholder="Tapez la quantité içi" value="${model.produit.quantite}"></th>
       <th scope="col"><button type="submit" class="btn btn-outline-primary" value="save" name="action">Save</button></th>
+      
     </tr>
       	<tr>
 	      <th scope="col" class="table1">Ref</td>

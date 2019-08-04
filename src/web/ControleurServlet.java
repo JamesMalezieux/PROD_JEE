@@ -74,10 +74,13 @@ public class ControleurServlet extends HttpServlet {
 				model.getProduit().setDesignation(request.getParameter("designation"));
 				model.getProduit().setPrix(Double.parseDouble(request.getParameter("prix")));
 				model.getProduit().setQuantite(Integer.parseInt(request.getParameter("quantite")));
-				if(model.getMode().equals("ajout"))
+				model.setMode(request.getParameter("mode"));
+				if(model.getMode().equals("ajout")) {
 				metier.addProduit(model.getProduit());
-				else if(model.getMode().equals("edit"))
+				}
+				else if(model.getMode().equals("edit")) {
 					metier.updateProduit(model.getProduit());
+					}
 				model.setProduits(metier.listProduits());
 			}catch(Exception e) {
 				model.setErrors(e.getMessage());
