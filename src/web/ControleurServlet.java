@@ -53,12 +53,35 @@ public class ControleurServlet extends HttpServlet {
 		if(action.equals("chercher")) {
 			model.setMotCle(request.getParameter("motCle"));
 			List<Produit> produits=metier.ProduitsParMC(model.getMotCle());
-			model.setProduit(produits);
+			model.setProduits(produits);
 		}
 		else if(action.equals("delete")) {
 			String ref=request.getParameter("ref");
 			metier.deleteProduit(ref);
-			model.setProduit(metier.listProduits());
+			model.setProduits(metier.listProduits());
+		}
+		else if(action.equals("edit")) {
+			String ref=request.getParameter("ref");
+			Produit p=metier.getProduit(ref);
+			model.setProduit(p);
+			model.setMode("edit");
+			model.setProduits(metier.listProduits());
+			
+		}
+		else if(action.equals("save")) {
+			try {
+				model.getProduit().setReference(request.getParameter("reference"));
+				model.getProduit().setDesignation(request.getParameter("designation"));
+				model.getProduit().setPrix(Double.parseDouble(request.getParameter("prix")));
+				model.getProduit().setQuantite(Integer.parseInt(request.getParameter("quantite")));
+				if(model.getMode().equals("ajout"))
+				metier.addProduit(model.getProduit());
+				else if(model.getMode().equals("edit"))
+					metier.updateProduit(model.getProduit());
+				model.setProduits(metier.listProduits());
+			}catch(Exception e) {
+				model.setErrors(e.getMessage());
+			}	
 		}
 	}
 		request.getRequestDispatcher("VueProduits.jsp").forward(request, response);

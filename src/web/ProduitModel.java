@@ -6,18 +6,40 @@ import metier.Produit;
 
 public class ProduitModel {
 private String motCle;
-private List<Produit> produit=new ArrayList<Produit>();
+private Produit produit=new Produit();
+private String errors;
+private String mode="edit";       
+
+public String getMode() {
+	return mode;
+}
+public void setMode(String mode) {
+	this.mode = mode;
+}
+public String getErrors() {
+	return errors;
+}
+public void setErrors(String errors) {
+	this.errors = errors;
+}
+public Produit getProduit() {
+	return produit;
+}
+public void setProduit(Produit produit) {
+	this.produit = produit;
+}
+private List<Produit> produits=new ArrayList<Produit>();
 public String getMotCle() {
 	return motCle;
 }
 public void setMotCle(String motCle) {
 	this.motCle = motCle;
 }
-public List<Produit> getProduit() {
-	return produit;
+public List<Produit> getProduits() {
+	return produits;
 }
-public void setProduit(List<Produit> produit) {
-	this.produit = produit;
+public void setProduits(List<Produit> produits) {
+	this.produits = produits;
 }
 
 
